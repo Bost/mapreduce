@@ -1,9 +1,50 @@
 # mapreduce
 
-Download the data (87 MB)
+{{{
+MapReduce is a programming model / pattern
+e.g. data too big
+
+map: collX -> collY       different(!) types
+clean up operation, shifting, filtering, normalizing (WVT)
+
+reduce: collY -> value
+abstraction; sampling(?)
+
+Composition: transducers, monads
+
+clojure
+python
+real world example - voting preferencies
+
+
+MapReduce at Google
+Papers & Slides
+- http://static.googleusercontent.com/media/research.google.com/en/us/archive/mapreduce-osdi04.pdf
+- https://research.google.com/archive/mapreduce-osdi04-slides/index.html
+
+Apache Hadoop https://mapr.com/products/apache-hadoop/
+distributed processing of large data sets across clusters of computers using simple programming models
+
+* s/MapReduce/Cloud Dataflow/     Reasons:
+- hard to ingest data rapidly
+- (too) many different technologies
+- batch & streaming unrelated
+- deployment & operation of clusters always required
+https://www.datacenterknowledge.com/archives/2014/06/25/google-dumps-mapreduce-favor-new-hyper-scale-analytics-system
+}}}
+
+
+## The data
+
+2017 Yellow Taxi Trip Data | NYC Open Data (87 MB)
 ```
 wget https://gist.github.com/kovrus/328ba1b041dfbd89e55967291ba6e074/raw/7818724cb64a5d283db7f815737c9e198a22bee4/nyc-yellow-taxi-2017.tar.gz
 ```
+
+2018 Yellow Taxi Trip Data | NYC Open Data - CSV for Excel (Europe)
+https://data.cityofnewyork.us/api/views/biws-g3hs/rows.csv?accessType=DOWNLOAD&bom=true&format=true&delimiter=;
+
+
 ## Usage
 
 FIXME
