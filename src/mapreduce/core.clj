@@ -45,13 +45,20 @@
 
 
 ;; getting biiiig {{{
-#_(def file "nyc-yellow-taxi-2017.json") ;; 4.000.000 lines
+#_(def file "nyc-yellow-taxi-2017.json")
+(def cnt-lines (count (get-lines))) ;; => 4.000.000 lines
 ;; }}}
 
 
 ;; getting low :) {{{
 ;; TODO introduce scaling / sampling / etc.
+;; e.g:
+(partition-all 3 [1 2 3 4 5 6 7 8 9 10]) ;; => ((1 2 3) (4 5 6) (7 8 9) (10))
+(def sample-size (/ cnt-lines 8)) ;; juggling with 8 elems
+(def the-line-samples (partition-all sample-size (get-lines)))
+(count the-line-samples)
 ;; }}}
+
 (defn reducer
   "return average"
   [collection]
