@@ -1,7 +1,9 @@
 # mapreduce
 
-A Clojure library designed to ... well, that part is up to you.
-
+Download the data (87 MB)
+```
+wget https://gist.github.com/kovrus/328ba1b041dfbd89e55967291ba6e074/raw/7818724cb64a5d283db7f815737c9e198a22bee4/nyc-yellow-taxi-2017.tar.gz
+```
 ## Usage
 
 FIXME
