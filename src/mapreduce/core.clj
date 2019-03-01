@@ -51,12 +51,21 @@
 
 
 ;; getting low :) {{{
-;; TODO introduce scaling / sampling / etc.
+;; Let's introduce some scaling / sampling / etc.
 ;; e.g:
 (partition-all 3 [1 2 3 4 5 6 7 8 9 10]) ;; => ((1 2 3) (4 5 6) (7 8 9) (10))
 (def sample-size (/ cnt-lines 8)) ;; juggling with 8 elems
 (def the-line-samples (partition-all sample-size (get-lines)))
 (count the-line-samples)
+
+;; TODO abstractions
+
+;; TODO https://funktionale-programmierung.de/2018/03/22/transducer.html
+;;      Idea: reduce list to list instead of to single value
+;; TODO Functors, Applicatives, And Monads In Pictures
+;;      http://adit.io/posts/2013-04-17-functors,_applicatives,_and_monads_in_pictures.html
+;; TODO Transducers - Episode 1 - Introduction to Transducers
+;;      https://www.youtube.com/watch?v=WkHdqg_DBBs
 ;; }}}
 
 (defn reducer
