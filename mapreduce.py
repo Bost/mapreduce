@@ -64,3 +64,21 @@ list(map(totalamount, jsonelems))
 # file = "nyc-yellow-taxi-2017.json"
 cntlines = len(getlines()) ## >>> 4.000.000 lines
 ## }}}
+
+
+## getting low :) {{{
+## Let's introduce some scaling / sampling / etc.
+## e.g:
+def partitionallObj(n, l):
+    """Yield successive n-sized chunks from l."""
+    for i in range(0, len(l), n):
+        yield l[i:i + n]
+
+def partitionall(n, l):
+    return list(partitionallObj(n, l))
+
+partitionall(3, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) ##, >>>, ((1, 2, 3), (4, 5, 6), (7, 8, 9), (10))
+# (def sample-size (/ cnt-lines 8)) ## juggling with 8 elems
+# (def the-line-samples (partition-all sample-size (get-lines)))
+# (count the-line-samples)
+## }}}
