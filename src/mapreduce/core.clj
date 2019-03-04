@@ -90,4 +90,5 @@
          reducer
          )))
 
-#_(map-reduce "nyc-yellow-taxi-2017.json" mapper reducer)
+(map-reduce "nyc-yellow-taxi-2017.json" mapper reducer)
+;; => 1.6239999999999999
