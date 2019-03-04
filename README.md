@@ -2,20 +2,20 @@
 
 {{{
 MapReduce is a programming model / pattern
-e.g. data too big
+usage example(s): data too big
 
-map: collX -> collY       different(!) types
-clean up operation, shifting, filtering, normalizing (WVT)
+map: collX -> collY       (note: different types)
+usage example(s): clean up operation, shifting, filtering, normalizing (WVT)
 
 reduce: collY -> value
-abstraction; sampling(?)
+usage example(s): abstraction; sampling(?)
 
-Composition: transducers, monads
+Programming is about Composition: TODO find the video of Bartosz Millewski
+usage example(s): transducers, monads
 
-clojure
-python
-real world example - voting preferencies
+The Code: mapreduce.clj (Clojure) / mapreduce.py (Python)
 
+Real World example(s): opinion polling, election survey, benchmarking(?)
 
 MapReduce at Google
 Papers & Slides

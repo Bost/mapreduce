@@ -8,6 +8,7 @@
 
 # 2. sudo apt install --yes python-setuptools
 # 3. sudo pip3 install first
+# 4. the data: see README.mk (wget ...)
 
 from first import first
 import json
@@ -51,7 +52,7 @@ list(map(type, jsonelems))
 ## analyse the type
 list(map(lambda elem: elem.keys(), jsonelems))
 
-## it's a dictionary (i.e.hash-map)! Yay :) Let's access it:
+## it's a dictionary (i.e. a hash-map)! Yay :) Let's access it:
 def totalamount(dct):
     return dct.get("total_amount")
 

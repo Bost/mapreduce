@@ -1,4 +1,4 @@
-(ns mapreduce.core
+(ns mapreduce.mapreduce
   (:require [clojure.data.json :as json]))
 
 ;; the boiler plate code {{{
