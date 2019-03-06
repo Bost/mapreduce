@@ -14,7 +14,7 @@
            [com.mchange.v2.c3p0 ComboPooledDataSource]))
 
 ;; TODO DRY dbase connection
-(defn dbspec [dbuser]
+(defn dbspec []
   {:datasource (dbcp/make-datasource
                 {:classname "io.crate.client.jdbc.CrateDriver"
                  :jdbc-url "crate://localhost:5432/"
@@ -33,22 +33,21 @@
                  ;; expire connections after 3 hours of inactivity:
                  (.setMaxIdleTime (* 3 60 60)))})
 
-(def dbconn-default :ufo)
-(def pooleddbspec {:ufo (delay (pool (dbspec dbconn-default)) 100)})
+(def pooleddbspec (delay (pool (dbspec)) 100))
 
-(defn dbquery-impl [{:keys [dbconn f sql log] :or {dbconn dbconn-default} :as prm}]
+(defn dbquery-impl [{:keys [f sql log] :as prm}]
   (if log
     (println (str "-- (-- :" f sql"
 -- )")))
-  (let [dbx @(dbconn pooleddbspec)]
-    (jdbc/with-db-connection [dbx (dbspec dbconn)]
+  (let [dbx @pooleddbspec]
+    (jdbc/with-db-connection [dbx (dbspec)]
       (jdbc/query dbx [sql]))))
 
 (def dbquery
   dbquery-impl
   #_(memo/memo dbquery-impl))
 
-(defn sdbquery [{:keys [dbconn sql] :or {dbconn dbconn-default} :as prm}]
+(defn sdbquery [{:keys [sql] :as prm}]
   #_(println "sdbquery" "sql" sql)
   {
    ;; :sql [sql] ; potentially more sql commands
