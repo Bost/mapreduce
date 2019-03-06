@@ -5,64 +5,24 @@
    [clojure.core.memoize :as memo])
   #_(:use
      [korma.db]
-     [korma.core])
-  (:import [java.util
-            Properties]
-           [java.sql DriverManager
-            Connection]
+     [korma.core]))
 
-           [com.mchange.v2.c3p0 ComboPooledDataSource]))
+(def db {:classname "io.crate.client.jdbc.CrateDriver"
+         :jdbc-url "crate://localhost:5432/"
+         :user "crate" :password ""})
 
-;; TODO DRY dbase connection
-(defn dbspec []
-  {:datasource (dbcp/make-datasource
-                {:classname "io.crate.client.jdbc.CrateDriver"
-                 :jdbc-url "crate://localhost:5432/"
-                 :user "crate" :password ""
-                 :test-query "SELECT 1;"})})
-
-(defn pool [spec]
-  {:datasource (doto (ComboPooledDataSource.)
-                 (.setDriverClass (:classname spec))
-                 (.setJdbcUrl (str "jdbc:" (:subprotocol spec) ":"
-                                   (:subname spec)))
-                 (.setUser (:user spec))
-                 (.setPassword (:password spec))
-                 ;; expire excess connections after 30 minutes of inactivity:
-                 (.setMaxIdleTimeExcessConnections (* 30 60))
-                 ;; expire connections after 3 hours of inactivity:
-                 (.setMaxIdleTime (* 3 60 60)))})
-
-(def pooleddbspec (delay (pool (dbspec)) 100))
-
-(defn dbquery-impl [{:keys [f sql log] :as prm}]
-  (if log
-    (println (str "-- (-- :" f sql"
--- )")))
-  (let [dbx @pooleddbspec]
-    (jdbc/with-db-connection [dbx (dbspec)]
-      (jdbc/query dbx [sql]))))
+(defn dbquery-impl [sql]
+  (jdbc/with-db-connection [con {:datasource (dbcp/make-datasource db)}]
+    (jdbc/query con [sql])))
 
 (def dbquery
-  dbquery-impl
-  #_(memo/memo dbquery-impl))
+  #_dbquery-impl
+  (memo/memo dbquery-impl))
 
-(defn sdbquery [{:keys [sql] :as prm}]
-  #_(println "sdbquery" "sql" sql)
-  {
-   ;; :sql [sql] ; potentially more sql commands
-   :rows (let [rows (dbquery prm)]
-           ;; (println "rows" rows)
-           rows)})
-
-(defn test-query [{:keys [] :as prm}]
-  (let [sql (str "
+(dbquery (str "
 select
   count(*) cnt
 from taxi_rides where
 pickup_location_id ='230'
-")]
-    (assoc prm :f "test-query" :sql sql)))
-
-(sdbquery (test-query {}))
-;; => {:rows ({:cnt 139492})}
+"))
+;; => ({:cnt 139492})
